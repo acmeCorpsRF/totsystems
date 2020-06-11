@@ -1,0 +1,5 @@
+{
+  "1": {"title": "Рабочие вопросы", "messageList": [1], "link": "/chat/1", "unread": false, "active": true},
+  "2": {"title": "Курилка", "messageList": [2], "link": "/chat/2", "unread": false, "active": false}
+}
+

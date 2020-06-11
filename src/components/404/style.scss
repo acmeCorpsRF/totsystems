@@ -1,0 +1,13 @@
+.error-page__block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background: url('https://znaiwifi.com/wp-content/uploads/2018/01/hqdefault.jpg') no-repeat center top, #ffffff;
+}
+
+.error-page__title {
+  font-weight: normal;
+  color: #c59f56;
+}
