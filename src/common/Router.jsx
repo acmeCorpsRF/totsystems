@@ -6,20 +6,22 @@ import Profile from '../containers/Profile/Profile';
 import PropTypes from "prop-types";
 import {bindActionCreators} from "redux";
 import connect from "react-redux/es/connect/connect";
-import {loadProfile} from "../actions/profileActions";
+import Authorization from '../components/Authorization/Authorization';
 
 class Router extends Component {
 
     static propTypes = {
-        chats: PropTypes.object.isRequired
+        chats: PropTypes.object.isRequired,
+        authorizedUser: PropTypes.bool.isRequired
     };
 
-    componentDidMount() {
-        this.props.loadProfile();
-    }
-
     render() {
-        const {chats} = this.props;
+        const {chats, authorizedUser} = this.props;
+        if (authorizedUser == false) {
+            return (
+                <Route component={Authorization}/>
+            );
+        }
         if (Object.keys(chats).length == 0) {
             return (
                 <Switch>
@@ -40,9 +42,10 @@ class Router extends Component {
     }
 }
 
-const mapStateToProps = ({chatReducer}) => ({
-    chats: chatReducer.chats
+const mapStateToProps = ({chatReducer, authorizationReducer}) => ({
+    chats: chatReducer.chats,
+    authorizedUser: authorizationReducer.authorizedUser
 });
-const mapDispatchToProps = dispatch => bindActionCreators({loadProfile}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(Router);
 

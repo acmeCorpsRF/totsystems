@@ -14,11 +14,15 @@ import PropTypes from "prop-types";
 class Header extends Component {
 
     static propTypes = {
-        menuToggle: PropTypes.func.isRequired
+        menuToggle: PropTypes.func.isRequired,
+        authorizedUser: PropTypes.bool.isRequired,
+        regNameUser: PropTypes.string.isRequired,
+        regSocialActivityUser: PropTypes.string.isRequired,
+        registeredUser: PropTypes.bool.isRequired
     };
 
     render() {
-        const {user, userSocialActivity, menuToggle} = this.props;
+        const {user, userSocialActivity, menuToggle, authorizedUser, regNameUser, regSocialActivityUser, registeredUser} = this.props;
         return (
             <header className="header">
                 <Link className="header__profile-link" to="/profile/">
@@ -26,7 +30,10 @@ class Header extends Component {
                         <Avatar>
                         </Avatar>
                     </ListItemAvatar>
-                    <ListItemText primary={user} secondary={userSocialActivity}/><ListItemText/>
+                    <ListItemText
+                        primary={(authorizedUser == true && registeredUser == true) ? regNameUser : user}
+                        secondary={(authorizedUser == true && registeredUser == true) ? regSocialActivityUser : userSocialActivity}/>
+                    <ListItemText/>
                 </Link>
                 <IconButton className="header__button-menu" onClick={menuToggle}>
                     <MenuIcon/>
@@ -36,9 +43,13 @@ class Header extends Component {
     }
 }
 
-const mapStateToProps = ({profileReducer}) => ({
+const mapStateToProps = ({profileReducer, authorizationReducer}) => ({
     user: profileReducer.user,
-    userSocialActivity: profileReducer.userSocialActivity
+    userSocialActivity: profileReducer.userSocialActivity,
+    authorizedUser: authorizationReducer.authorizedUser,
+    regNameUser: authorizationReducer.regNameUser,
+    regSocialActivityUser: authorizationReducer.regSocialActivityUser,
+    registeredUser: authorizationReducer.registeredUser
 });
 const mapDispatchToProps = dispatch => bindActionCreators({menuToggle}, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

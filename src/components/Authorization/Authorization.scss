@@ -1,0 +1,50 @@
+.authorization, .registration {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  max-width: 320px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
+  transform: translate(-50%, -50%);
+
+  &__title {
+    position: relative;
+    height: 60px;
+    padding: 0 20px;
+    line-height: 60px;
+    color: #ffffff;
+    background-color: #3f51b5;
+
+    &-link {
+      position: absolute;
+      right: 5px;
+      bottom: 5px;
+      font-size: 12px;
+      line-height: 10px;
+      color: #ffffff;
+
+      &:hover {
+        text-decoration: none;
+      }
+
+    }
+
+  }
+
+  form {
+    position: relative;
+    padding: 10px;
+    text-align: center;
+    background-color: #ffffff;
+  }
+
+  .entry-field {
+    width: 100%;
+    height: 56px;
+    margin-bottom: 15px;
+
+    & > div {
+      height: 56px;
+    }
+
+  }
+}

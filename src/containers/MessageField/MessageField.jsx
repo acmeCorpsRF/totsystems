@@ -30,7 +30,10 @@ class MessageField extends Component {
         updateDataEditMessage: PropTypes.func.isRequired,
         textEditMessage: PropTypes.object.isRequired,
         inputText: PropTypes.string.isRequired,
-        changeInputText: PropTypes.func.isRequired
+        changeInputText: PropTypes.func.isRequired,
+        authorizedUser: PropTypes.bool.isRequired,
+        regNameUser: PropTypes.string.isRequired,
+        registeredUser: PropTypes.bool.isRequired
     };
 
     state = {
@@ -46,8 +49,8 @@ class MessageField extends Component {
 
     sendMessage = (e, text) => {
         e.preventDefault();
-        const {chatId, user, updateDataSendMessage} = this.props;
-        updateDataSendMessage(user, text, chatId);
+        const {chatId, user, updateDataSendMessage, authorizedUser, regNameUser, registeredUser} = this.props;
+        updateDataSendMessage((authorizedUser == true && registeredUser == true) ? regNameUser : user, text, chatId);
         this.setState({
             disableSendBtn: true
         });
@@ -165,7 +168,7 @@ class MessageField extends Component {
     }
 }
 
-const mapStateToProps = ({chatReducer, profileReducer}) => ({
+const mapStateToProps = ({chatReducer, profileReducer, authorizationReducer}) => ({
     user: profileReducer.user,
     chats: chatReducer.chats,
     messages: chatReducer.messages,
@@ -173,7 +176,10 @@ const mapStateToProps = ({chatReducer, profileReducer}) => ({
     firstDataLoadMessages: chatReducer.firstDataLoadMessages,
     hiddenEditButton: chatReducer.hiddenEditButton,
     textEditMessage: chatReducer.textEditMessage,
-    inputText: chatReducer.inputText
+    inputText: chatReducer.inputText,
+    authorizedUser: authorizationReducer.authorizedUser,
+    regNameUser: authorizationReducer.regNameUser,
+    registeredUser: authorizationReducer.registeredUser
 });
 const mapDispatchToProps = dispatch => bindActionCreators({
     updateDataSendMessage,

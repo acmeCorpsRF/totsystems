@@ -21,11 +21,15 @@ class Profile extends Component {
 
     static propTypes = {
         isVisibility: PropTypes.bool.isRequired,
-        chats: PropTypes.object.isRequired
+        chats: PropTypes.object.isRequired,
+        authorizedUser: PropTypes.bool.isRequired,
+        regNameUser: PropTypes.string.isRequired,
+        regSocialActivityUser: PropTypes.string.isRequired,
+        registeredUser: PropTypes.bool.isRequired
     };
 
     render() {
-        const {user, userSocialActivity, isVisibility, chats} = this.props;
+        const {user, userSocialActivity, isVisibility, chats, authorizedUser, regNameUser, regSocialActivityUser, registeredUser} = this.props;
         let classes = classNames('aside', {'visibility': isVisibility}),
             chatActive = '/';
         if (Object.keys(chats).length != 0) {
@@ -95,7 +99,10 @@ class Profile extends Component {
                         <div className="profile__image">
                             <Avatar>
                             </Avatar>
-                            <ListItemText primary={user} secondary={userSocialActivity}/><ListItemText/>
+                            <ListItemText
+                                primary={(authorizedUser == true && registeredUser == true) ? regNameUser : user}
+                                secondary={(authorizedUser == true && registeredUser == true) ? regSocialActivityUser : userSocialActivity}/>
+                            <ListItemText/>
                         </div>
                         <div className="profile__text">
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque deleniti harum magnam
@@ -140,11 +147,15 @@ class Profile extends Component {
     }
 }
 
-const mapStateToProps = ({profileReducer, chatReducer}) => ({
+const mapStateToProps = ({profileReducer, chatReducer, authorizationReducer}) => ({
     user: profileReducer.user,
     userSocialActivity: profileReducer.userSocialActivity,
     isVisibility: chatReducer.isVisibility,
-    chats: chatReducer.chats
+    chats: chatReducer.chats,
+    authorizedUser: authorizationReducer.authorizedUser,
+    regNameUser: authorizationReducer.regNameUser,
+    regSocialActivityUser: authorizationReducer.regSocialActivityUser,
+    registeredUser: authorizationReducer.registeredUser
 });
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
