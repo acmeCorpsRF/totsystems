@@ -106,7 +106,8 @@ class Authorization extends Component {
                             variant="outlined"
                             multiline
                             onChange={this.changeLoginUserText}
-                            value={this.state.loginUser}/>
+                            value={this.state.loginUser}
+                            placeholder="nikolai"/>
                         <TextField
                             error={this.state.errorPasswordUser}
                             className="entry-field"
@@ -115,7 +116,8 @@ class Authorization extends Component {
                             variant="outlined"
                             multiline
                             onChange={this.changePasswordUserText}
-                            value={this.state.passwordUser}/>
+                            value={this.state.passwordUser}
+                            placeholder="12345"/>
                         <Button
                             className="authorization__send-btn"
                             variant="contained"
